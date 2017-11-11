@@ -1,0 +1,37 @@
+﻿@using SimuladorPrestamos.BO
+@model ClientesBO
+@{
+    ViewBag.Title = "Editar";
+}
+
+<div style="margin-top:100px">
+    <h2>@((Model.CodigoCliente > 0) ? "Editar Cliente: " + Model.Nombre : "Nuevo Prestamo")</h2>
+    @using (Html.BeginForm("Guardar", "Clientes", FormMethod.Post))
+    {
+        @Html.HiddenFor(x => x.CodigoCliente)
+        <table class="table" style="color:black">
+
+           <tr>
+                <td>Nombre:</td>
+                <td>@Html.TextBoxFor(x => x.Nombre)</td>
+            </tr>
+
+            <tr>
+                <td>Apellido:</td>
+                <td>@Html.TextBoxFor(x => x.Apellido)</td>
+            </tr>
+
+            <tr>
+                <td>Telefono:</td>
+                <td>@Html.TextBoxFor(x => x.Telefono)</td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit" class="btn-success">Enviar</button>  </td>
+
+            </tr>
+        </table>
+    }
+
+
+</div>
+

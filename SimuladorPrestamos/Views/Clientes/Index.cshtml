@@ -1,0 +1,63 @@
+﻿@using System.Data
+@model DataTable
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div style="margin-top:100px;">
+    <h2>Clientes</h2>
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-danger" style="color:black" href="~/Clientes/Editar">Nuevo Cliente</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table" style="color:black">
+                <thead>
+                    <tr>
+                        <th scope="col">Cod. Cliente</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Telefono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow Fila in Model.Rows)
+                    {
+                        <tr id="fila_@Fila["idCliente"]">
+                            <td>@Fila["idCliente"]</td>
+                            <td>@Fila["Nombre"]</td>
+                            <td>@Fila["Apellido"]</td>
+                            <td>@Fila["Telefono"]</td>
+                            <td>
+                                <a href="~/Clientes/Editar/@Fila["idCliente"]">Editar</a>
+                                <a role="button" onclick="eliminar(@Fila["idCliente"])" href="#">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function eliminar(id)
+    {
+        
+            $.ajax({
+                url: '@Url.Action("Eliminar")',
+                type: "GET",
+                data: { id: id },
+                success: function (result) {
+                    $("#fila_" + id).remove();
+                },
+                error: function (errormessage) {
+                    Console.log("Error " +errormessage);
+                }
+            });
+
+    }
+</script>

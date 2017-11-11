@@ -1,0 +1,50 @@
+﻿@using System.Data;
+@model DataTable
+@{
+    ViewBag.Title = "Prestamos";
+}
+
+<div style="margin-top:100px">
+    <h2>Simulaciones</h2>
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-info" style="color:black" href="~/Prestamos/Editar">Nueva simulacion</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table" style="color:black">
+                <thead>
+                    <tr>
+                        <th scope="col">Cod. Prestamo</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Taza de interes</th>
+                        <th scope="col">Plazo a pagar</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow Fila in Model.Rows)
+                    {
+                        <tr>
+                            <td>@Fila["idPrestamo"]</td>
+                            <td>@Fila["Nombre"]</td>
+                            <td>@Fila["Monto"]</td>
+                            <td>@Fila["TazaInteres"]</td>
+                            <td>@Fila["Plazo"]</td>
+                            <td>@DateTime.Parse(Fila["FechaInicio"].ToString()).ToShortDateString()</td>
+                            <td><a href="~/Prestamos/Archivo/@Fila["idPrestamo"]">Descargar</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+
+

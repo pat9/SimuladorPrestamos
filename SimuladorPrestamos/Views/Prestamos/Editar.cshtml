@@ -1,0 +1,76 @@
+﻿@using SimuladorPrestamos.BO;
+@model SimulacionBO
+@{
+    ViewBag.Title = "Editar";
+}
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<div style="margin-top:100px;">
+
+<h2>@((Model.CodigoPrestamo > 0)?"Editar Simulacion NO." + Model.CodigoPrestamo : "Nuevo Prestamo")"</h2>
+@using (Html.BeginForm("Guardar", "Prestamos", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.CodigoPrestamo)
+    <table class="table" style="color:black">
+
+        <tr>
+            <td>Cliente:</td>
+            <td><select id="lstClientes"></select></td>
+            @Html.HiddenFor(x => x.CodigoCliente);
+        </tr>
+
+        <tr>
+            <td>Monto:</td>
+            <td>@Html.TextBoxFor(x => x.Monto)</td>
+        </tr>
+
+        <tr>
+            <td>Taza de interes mensual:</td>
+            <td>@Html.TextBoxFor(x => x.TazaInteres)</td>
+        </tr>
+
+        <tr>
+            <td>Plazo de Pago(Meses):</td>
+            <td>@Html.TextBoxFor(x => x.PlazoPago)</td>
+        </tr>
+        <tr>
+            <td>Fecha inicio(Primera fecha de pago):</td>
+            <td>@Html.TextBoxFor(x => x.FechaIncio, new {type="date" })</td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit" class="btn-success">Enviar</button>  </td>
+
+        </tr>
+    </table>
+}
+
+<script>
+
+   
+    $.ajax({
+        url: '@Url.Action("ListaNombres")',
+        success: function (result) {
+            Lista(result)
+            console.log(result)
+        }
+
+    })
+
+    function Lista(Datos)
+    {
+        for (i = 0; i < Datos.length; i++)
+        {
+            $('#lstClientes').append("<option value="+ Datos[i].CodigoCliente  +">" + Datos[i].Nombre  + "</option>")
+        }
+    }
+
+    $('#lstClientes').change(function () {
+        $('#CodigoCliente').val($('#lstClientes option:selected').val())
+        console.log($('#CodigoCliente').val())
+    })
+
+
+
+</script>
+</div>
